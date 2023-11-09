@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Viivakoodin luoja</title>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.11.0/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+</head>
+<body>
+    <h1>Viivakoodin luoja</h1>
+    <form id="barcodeForm">
+        <input id="barcodeValue" type="text" placeholder="Syötä viivakoodin arvo" required />
+        <button type="submit">Luo viivakoodi</button>
+    </form>
+    <svg id="barcode"></svg>
+    <img id="barcodeImage" />
+
+    <script>
+        document.getElementById('barcodeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var value = document.getElementById("barcodeValue").value;
+            JsBarcode("#barcode", value, {
+                format: "CODE128"
+            });
+            html2canvas(document.getElementById("barcode")).then(function(canvas) {
+                document.getElementById("barcodeImage").src = canvas.toDataURL();
+            });
+        });
+    </script>
+</body>
+</html>
